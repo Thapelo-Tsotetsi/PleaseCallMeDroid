@@ -7,12 +7,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,6 +26,7 @@ public class DroidMainActivity extends Activity {
 
     protected static final int CONTACT_PICKER_RESULT = 0;
 	protected String numToCall="0";
+	protected String providerPrefix;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,40 @@ public class DroidMainActivity extends Activity {
 				numToCall = txtArea.getText().toString();
 				Toast.makeText(getApplicationContext(), numToCall, Toast.LENGTH_LONG).show();
 				
-				Intent intent = new Intent(android.content.Intent.ACTION_CALL, Uri.parse("tel:*"+numToCall+Uri.encode("#")));
+				Intent intent = new Intent(android.content.Intent.ACTION_CALL, Uri.parse("tel:*"+providerPrefix+"*"+numToCall+Uri.encode("#")));
+				Toast.makeText(getApplicationContext(), providerPrefix, Toast.LENGTH_LONG).show();
 				startActivityForResult(intent,1);
 			}
         	
         });
+        
+        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+
+        if(providerPrefix == null){
+        	providerPrefix = "121";
+        	SharedPreferences.Editor editor = settings.edit();
+        	editor.putString("providerPrefix", providerPrefix);
+        	editor.commit();
+        }
     }
+	
+	
+    public void selectProvider(MenuItem menuItem) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.choose_provider);
+        builder.setItems(R.array.provider_names, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                TypedArray providerPrefixes = getResources().obtainTypedArray(R.array.provider_prefixes);
+                providerPrefix = providerPrefixes.getString(which);
+                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                editor.putString("providerPrefix", providerPrefix);
+                editor.commit();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -126,7 +158,20 @@ public class DroidMainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_droid_main, menu);
+        super.onCreateOptionsMenu(menu);
+        menu.add("Select Providerr");
+    	
+    	//getMenuInflater().inflate(R.menu.options, menu);
+        Toast.makeText(getApplicationContext(), "createMenu", Toast.LENGTH_LONG).show();
+        
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	super.onOptionsItemSelected(item);
+    	selectProvider(item);
+    	Toast.makeText(getApplicationContext(), "onOptionsItem", Toast.LENGTH_LONG).show();
+    	return true;
     }
 }
