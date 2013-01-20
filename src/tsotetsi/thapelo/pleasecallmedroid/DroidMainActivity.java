@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,9 +62,10 @@ public class DroidMainActivity extends Activity {
         });
         
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
-
+        
         if(providerPrefix == null){
-        	providerPrefix = "121";
+        	MenuItem menuItem = null;
+			selectProvider(menuItem);
         	SharedPreferences.Editor editor = settings.edit();
         	editor.putString("providerPrefix", providerPrefix);
         	editor.commit();
