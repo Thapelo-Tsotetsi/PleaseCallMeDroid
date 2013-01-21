@@ -29,11 +29,15 @@ public class DroidMainActivity extends Activity {
     protected static final int CONTACT_PICKER_RESULT = 0;
 	protected String numToCall="0";
 	protected String providerPrefix;
-
+	protected static int operatorName =0;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_droid_main);
+        
+        operatorName = Integer.parseInt(getSimOperatorName());
+        InitializeProvider(operatorName);
         
         final EditText txtArea = (EditText)findViewById(R.id.cellNunberText);
         Button btnSelectContact = (Button)findViewById(R.id.btnContact);
@@ -61,19 +65,19 @@ public class DroidMainActivity extends Activity {
         	
         });
         
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
+/*        SharedPreferences settings = getPreferences(MODE_PRIVATE);
         
         if(providerPrefix == null){
-        	MenuItem menuItem = null;
-			selectProvider(menuItem);
+        	//MenuItem menuItem = null;
+			//selectProvider(menuItem);
         	SharedPreferences.Editor editor = settings.edit();
         	editor.putString("providerPrefix", providerPrefix);
         	editor.commit();
-        }
+        }*/
     }
 	
 	
-    public void selectProvider(MenuItem menuItem) {
+/*    public void selectProvider(MenuItem menuItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_provider);
         builder.setItems(R.array.provider_names, new DialogInterface.OnClickListener() {
@@ -87,7 +91,7 @@ public class DroidMainActivity extends Activity {
         });
         AlertDialog alert = builder.create();
         alert.show();
-    }
+    }*/
 	
 	
 	@Override
@@ -173,8 +177,37 @@ public class DroidMainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
     	super.onOptionsItemSelected(item);
-    	selectProvider(item);
+    	//selectProvider(item);
     	Toast.makeText(getApplicationContext(), "onOptionsItem", Toast.LENGTH_LONG).show();
     	return true;
+    }
+    
+    public String getSimOperatorName(){
+        TelephonyManager telephonyManager = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE));
+        String operatorName = telephonyManager.getSimOperator();
+        System.out.println(operatorName);
+        Toast.makeText(getApplicationContext(), operatorName+"geSimOperator", Toast.LENGTH_LONG).show();
+    	return operatorName;
+    }
+    
+    public void InitializeProvider(int providerName){
+    	int aProvider = providerName;
+    	switch(aProvider){
+    	case 65502: //8ta
+    		providerPrefix = "140";
+    	break;
+    	case 65510: //mtn
+    		providerPrefix = "121";
+    		break;
+    	case 65507: //cellc
+    		providerPrefix = "111";
+    		break;
+    	case 65501: //vodacom
+    		providerPrefix = "140";
+    		break;
+    	default:
+    		providerPrefix = "";
+    	}
+    	Toast.makeText(getApplicationContext(), providerName+"InitiaPro", Toast.LENGTH_LONG).show();
     }
 }
