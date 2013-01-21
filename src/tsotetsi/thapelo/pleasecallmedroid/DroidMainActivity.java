@@ -8,16 +8,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.TelephonyManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -65,33 +61,7 @@ public class DroidMainActivity extends Activity {
         	
         });
         
-/*        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        
-        if(providerPrefix == null){
-        	//MenuItem menuItem = null;
-			//selectProvider(menuItem);
-        	SharedPreferences.Editor editor = settings.edit();
-        	editor.putString("providerPrefix", providerPrefix);
-        	editor.commit();
-        }*/
     }
-	
-	
-/*    public void selectProvider(MenuItem menuItem) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.choose_provider);
-        builder.setItems(R.array.provider_names, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                TypedArray providerPrefixes = getResources().obtainTypedArray(R.array.provider_prefixes);
-                providerPrefix = providerPrefixes.getString(which);
-                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-                editor.putString("providerPrefix", providerPrefix);
-                editor.commit();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }*/
 	
 	
 	@Override
@@ -136,7 +106,6 @@ public class DroidMainActivity extends Activity {
 						public void onClick(DialogInterface dialog, int item) {
 	                         String selectedNumber = items[item].toString();
 	                         selectedNumber = selectedNumber.replace("-", "");
-	                         System.out.println(selectedNumber);
 	                         phoneInput.setText(selectedNumber);
 	                         numToCall = selectedNumber;
 							
@@ -163,36 +132,19 @@ public class DroidMainActivity extends Activity {
 		}
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add("Select Providerr");
-    	
-    	//getMenuInflater().inflate(R.menu.options, menu);
-        Toast.makeText(getApplicationContext(), "createMenu", Toast.LENGTH_LONG).show();
-        
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-    	super.onOptionsItemSelected(item);
-    	//selectProvider(item);
-    	Toast.makeText(getApplicationContext(), "onOptionsItem", Toast.LENGTH_LONG).show();
-    	return true;
-    }
-    
+    /**
+     * Uses TelephoneManger to get
+     * operator numeric name
+     * @return Operator numeric name
+     */
     public String getSimOperatorName(){
         TelephonyManager telephonyManager = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE));
         String operatorName = telephonyManager.getSimOperator();
-        System.out.println(operatorName);
-        Toast.makeText(getApplicationContext(), operatorName+"geSimOperator", Toast.LENGTH_LONG).show();
     	return operatorName;
     }
     
     public void InitializeProvider(int providerName){
-    	int aProvider = providerName;
-    	switch(aProvider){
+    	switch(providerName){
     	case 65502: //8ta
     		providerPrefix = "140";
     	break;
@@ -208,6 +160,23 @@ public class DroidMainActivity extends Activity {
     	default:
     		providerPrefix = "";
     	}
-    	Toast.makeText(getApplicationContext(), providerName+"InitiaPro", Toast.LENGTH_LONG).show();
+    }
+    /**
+     * Remove the application from the running
+     * services stack
+     */
+    protected void onStop(){
+    	super.onStop();
+    	finish();
+    }
+    
+    /**
+     * Remove characters and
+     * country code
+     */
+    public static String replaceCharacter(String num){
+    		num = num.replaceAll("^\\+27", "0");
+    		num = num.replaceAll("[^0-9]", "");
+    	return num;
     }
 }
