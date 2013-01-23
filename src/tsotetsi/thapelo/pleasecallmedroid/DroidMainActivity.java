@@ -161,14 +161,7 @@ public class DroidMainActivity extends Activity {
     		providerPrefix = "";
     	}
     }
-    /**
-     * Remove the application from the running
-     * services stack
-     */
-    protected void onStop(){
-    	super.onStop();
-    	finish();
-    }
+
     
     /**
      * Remove characters and
