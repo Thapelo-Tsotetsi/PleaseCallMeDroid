@@ -8,6 +8,16 @@ Android 2.1 - 4.0  basic ussd functionalities such as send and personalize callm
 
 #To do
 -Make application available throughout african countries. 
-  - eg add mtn Nigeria and other operators.
+  - eg add mtn Nigeria and other operators. - No implemented yet
 
-List of current operators(and there countries).
+List of current operators(and there countries) as of 25 Jan 2013.
+  - 65502 - Telkom 8ta South Africa
+  - 65507 - Cellc South Africa
+  - 65501 - Vodacom South Africa 
+  - 65510 - MTN - South Africa
+  - 62401 - MTN Cameroon - Cameroon
+  - 62130 - MTN Nigeria - Nigeria
+  - 63510 - MTN Rwandacell - Rwanda
+  - 41302 - MTN Networks Dialog GSM - Sri Lanka
+  - 65310 - Swazi MTN - Swaziland
+  - 64110 - MTN Uganda - Uganda
