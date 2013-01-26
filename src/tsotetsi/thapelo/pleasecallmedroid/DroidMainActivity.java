@@ -31,6 +31,7 @@ public class DroidMainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_droid_main);
+         
         
         operatorName = Integer.parseInt(getSimOperatorName());
         InitializeProvider(operatorName);
@@ -45,6 +46,10 @@ public class DroidMainActivity extends Activity {
 			}
         	
         });
+        
+
+        
+        
         
         Button btnsendCallback = (Button)findViewById(R.id.btnSend);
         btnsendCallback.setOnClickListener(new OnClickListener(){
@@ -164,7 +169,7 @@ public class DroidMainActivity extends Activity {
 
     
     /**
-     * Remove characters and
+     * Remove characters, braces and  - Android 4.0
      * country code
      */
     public static String replaceCharacter(String num){
