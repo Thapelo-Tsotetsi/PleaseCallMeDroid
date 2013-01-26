@@ -153,14 +153,32 @@ public class DroidMainActivity extends Activity {
     	case 65502: //8ta
     		providerPrefix = "140";
     	break;
-    	case 65510: //mtn
-    		providerPrefix = "121";
+    	case 65501: //vodacom
+    		providerPrefix = "140";
     		break;
     	case 65507: //cellc
     		providerPrefix = "111";
     		break;
-    	case 65501: //vodacom
-    		providerPrefix = "140";
+    	case 65510: //mtn south africa
+    		providerPrefix = "121";
+    		break;
+    	case 62401: //mtn Cameron
+    		providerPrefix = "121";
+    		break;
+    	case 62130: //mtn Nigeria
+    		providerPrefix = "121";
+    		break;
+    	case 63510: //mtn Rwanda Cell
+    		providerPrefix = "121";
+    		break;
+    	case 41302: //mtn Networks Dialog GSM - Sri Lanka
+    		providerPrefix = "121";
+    		break;
+    	case 65310: //Swazi Mtn - Swaziland
+    		providerPrefix = "121";
+    		break;
+    	case 64110: //mtn Uganda - Uganda
+    		providerPrefix = "121";
     		break;
     	default:
     		providerPrefix = "";
