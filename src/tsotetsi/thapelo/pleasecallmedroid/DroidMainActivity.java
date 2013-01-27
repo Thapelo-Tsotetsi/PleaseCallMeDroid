@@ -2,7 +2,6 @@ package tsotetsi.thapelo.pleasecallmedroid;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -46,9 +45,6 @@ public class DroidMainActivity extends Activity {
 			}
         	
         });
-        
-
-        
         
         
         Button btnsendCallback = (Button)findViewById(R.id.btnSend);
@@ -185,7 +181,6 @@ public class DroidMainActivity extends Activity {
     	}
     }
 
-    
     /**
      * Remove characters, braces and  - Android 4.0
      * country code
