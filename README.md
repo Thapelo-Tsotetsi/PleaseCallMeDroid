@@ -7,8 +7,9 @@ Android 2.1 - 4.0  basic ussd functionalities such as send and personalize callm
 
 
 #To do
--Make application available throughout african countries where a please call me is available
--Remove +27 and include the newMTN number i.e 060...
+- Make application available throughout african countries where a please call me is available
+
+- Remove +27 and include the new MTN number i.e 060...
 
 List of current operators(and there countries) as of 25 Jan 2013.
   - 65502 - Telkom 8ta South Africa
